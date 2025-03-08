@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { Dog } from '../types/types';
-
+import Image from 'next/image';
 interface DogFormProps {
   dog?: Dog;
   onSubmit: (dog: Omit<Dog, 'id'>) => void;
@@ -44,7 +44,7 @@ export function DogForm({ dog, onSubmit, onCancel }: DogFormProps) {
         <div className="relative w-32 h-32 mb-4">
           <div className="w-full h-full rounded-full border-2 border-gray-200 overflow-hidden">
             {imagePreview ? (
-              <img
+              <Image
                 src={imagePreview}
                 alt="Preview"
                 className="w-full h-full object-cover"

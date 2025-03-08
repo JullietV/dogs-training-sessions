@@ -131,10 +131,12 @@ export default function DogManagement({ dogs, setDogs }: DogManagementProps) {
                 <div className="p-6">
                   <div className="flex items-center space-x-4 mb-4">
                     {dog.imageUrl && (
-                      <img
+                      <Image
                         src={dog.imageUrl}
                         alt={dog.name}
                         className="w-16 h-16 rounded-full object-cover"
+                        width={64}
+                        height={64}
                       />
                     )}
                     <div>

@@ -36,7 +36,7 @@ export default function TrainingInstructions({ onClose }: TrainingInstructionsPr
               
               <div className="bg-yellow-50 p-3 rounded">
                 <p className="font-medium">3. Evaluación (30 segundos)</p>
-                <p className="text-sm text-gray-600">Momento para evaluar el desempeño de tu perro en la tarea anterior. Califica como "Bien", "Regular" o "Mal".</p>
+                <p className="text-sm text-gray-600">Momento para evaluar el desempeño de tu perro en la tarea anterior. Califica como Bien, Regular o Mal.</p>
               </div>
             </div>
           </section>

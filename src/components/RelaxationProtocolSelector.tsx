@@ -1,7 +1,7 @@
 'use client';
 
 import { relaxationProtocol, RelaxationDay } from '../data/relaxationProtocol';
-import DayCard from './DayCard';
+import { DayCard } from './DayCard';
 interface RelaxationProtocolSelectorProps {
   onSelectDay: (day: RelaxationDay) => void;
 }
@@ -14,7 +14,7 @@ export default function RelaxationProtocolSelector({ onSelectDay }: RelaxationPr
         {(Object.keys(relaxationProtocol) as RelaxationDay[]).map((dayKey) => {
           const day = relaxationProtocol[dayKey];
           return (
-              <DayCard key={day.id}  day={day}/>  
+            <DayCard key={day.id}  day={day.day.toString()} tasks={day.tasks}/>  
           );
         })}
       </div>

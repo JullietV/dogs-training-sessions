@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import CircularProgress from '../components/CircularProgress';
 import { useLocalStorage } from '../hooks/useLocalStorage';
@@ -63,24 +63,7 @@ export function TrainingSession({ day, dogId, dayData }: TrainingSessionProps) {
     setResult(null);
   }, [sessionState, currentTask?.duration]);
 
-  useEffect(() => {
-    if (isPaused || timeRemaining <= 0) return;
-
-    const timer = setInterval(() => {
-      setTimeRemaining(prev => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          handleTimerComplete();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [isPaused, sessionState, timeRemaining]);
-
-  const handleTimerComplete = () => {
+  const handleTimerComplete = useCallback(() => {
     switch (sessionState) {
       case 'preparation':
         setSessionState('task');
@@ -116,7 +99,26 @@ export function TrainingSession({ day, dogId, dayData }: TrainingSessionProps) {
         }
         break;
     }
-  };
+  }, [sessionState, currentTaskIndex, day, dogId, currentTask, tasks.length]);
+
+  useEffect(() => {
+    if (isPaused || timeRemaining <= 0) return;
+
+    const timer = setInterval(() => {
+      setTimeRemaining(prev => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          handleTimerComplete();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [isPaused, sessionState, timeRemaining, handleTimerComplete]);
+
+  
 
   const handleResult = (selectedResult: 'bien' | 'regular' | 'mal') => {
     if (result !== null) return;

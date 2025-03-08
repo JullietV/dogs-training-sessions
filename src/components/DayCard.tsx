@@ -9,7 +9,7 @@ import { DogSelector } from './DogSelector';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
 interface DayCardProps {
-  day: string;
+  day: string;  
   tasks: Task[];
 }
 
