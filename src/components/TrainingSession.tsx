@@ -69,7 +69,7 @@ export function TrainingSession({ day, dogId, dayData }: TrainingSessionProps) {
         setSessionState('task');
         break;
       case 'task':
-        const taskId = `day${day}-${currentTaskIndex + 1}`;
+        const taskId = `day${dayData.day}-${currentTaskIndex + 1}`;
         const session: TaskSession = {
           id: Date.now().toString(),
           dogId: dogId,
@@ -124,7 +124,7 @@ export function TrainingSession({ day, dogId, dayData }: TrainingSessionProps) {
     if (result !== null) return;
     
     setResult(selectedResult);
-    const taskId = `day${day}-${currentTaskIndex + 1}`;
+    const taskId = `day${dayData.day}-${currentTaskIndex + 1}`;
     const session: TaskSession = {
       id: Date.now().toString(),
       dogId: dogId,
@@ -136,10 +136,17 @@ export function TrainingSession({ day, dogId, dayData }: TrainingSessionProps) {
       status: 'completed'
     };
     
-    console.log('Sesión a guardar:', session);
     try {
       sessionStorage.saveSession(session);
       console.log('Sesión guardada exitosamente');
+      
+      if (currentTaskIndex < tasks.length - 1) {
+        setCurrentTaskIndex(prev => prev + 1);
+        setSessionState('preparation');
+      } else {
+        setSessionState('completed');
+      }
+      
     } catch (error) {
       console.error('Error al guardar la sesión:', error);
     }
@@ -149,17 +156,20 @@ export function TrainingSession({ day, dogId, dayData }: TrainingSessionProps) {
     const confirmCancel = window.confirm('¿Estás seguro que deseas cancelar la sesión? Las tareas completadas se guardarán en el historial.');
     
     if (confirmCancel) {
-      if (sessionState === 'task' || sessionState === 'evaluation') {
+      if ((sessionState === 'task' || sessionState === 'evaluation') && result === null) {
+        const taskId = `day${dayData.day}-${currentTaskIndex + 1}`;
         const session: TaskSession = {
           id: Date.now().toString(),
           dogId: dogId,
-          taskId: currentTask.id,
+          taskId: taskId,
           taskName: currentTask.name,
           taskDescription: currentTask.description,
-          result: result || 'mal',
+          result: null,
           timestamp: new Date().toISOString(),
           status: 'cancelled'
         };
+
+        console.log('Sesión a guardar:', session);
         
         sessionStorage.saveSession(session);
       }
