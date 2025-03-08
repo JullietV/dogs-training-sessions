@@ -6,7 +6,7 @@ import CircularProgress from '../components/CircularProgress';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { Dog, TaskSession } from '../types/types';
 import { sessionStorage } from '../services/sessionStorage';
-
+import Link from 'next/link';
 interface TrainingSessionProps {
   day: string;
   dogId: string;
@@ -217,12 +217,12 @@ export function TrainingSession({ day, dogId, dayData }: TrainingSessionProps) {
           <p className="text-gray-600 mb-6">
             Has completado todas las tareas del día {day} con {dog.name}.
           </p>
-          <a
+          <Link
             href="/"
             className="block w-full bg-blue-600 text-white text-center px-4 py-2 rounded hover:bg-blue-700 transition-colors"
           >
             Volver al inicio
-          </a>
+          </Link>
         </div>
       </div>
     );
